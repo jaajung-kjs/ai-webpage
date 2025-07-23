@@ -12,7 +12,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { createClient } from "@/lib/supabase/client"
 import { format } from "date-fns"
 import { ko } from "date-fns/locale"
-import { CalendarPlus, Loader2 } from "lucide-react"
+import { CalendarPlus, Loader2, Trash2 } from "lucide-react"
 import { toast } from "sonner"
 
 interface Event {
@@ -27,7 +27,7 @@ interface Event {
   }
 }
 
-export function EventCalendar({ canCreate = false }: { canCreate?: boolean }) {
+export function EventCalendar({ canCreate = false, canDelete = false }: { canCreate?: boolean; canDelete?: boolean }) {
   const [date, setDate] = useState<Date | undefined>(new Date())
   const [events, setEvents] = useState<Event[]>([])
   const [selectedDateEvents, setSelectedDateEvents] = useState<Event[]>([])
@@ -109,6 +109,27 @@ export function EventCalendar({ canCreate = false }: { canCreate?: boolean }) {
       fetchEvents()
     } catch (error) {
       toast.error("일정 추가에 실패했습니다.")
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleDeleteEvent = async (eventId: string) => {
+    if (!confirm("정말로 이 일정을 삭제하시겠습니까?")) return
+
+    setIsLoading(true)
+    try {
+      const { error } = await supabase
+        .from("events")
+        .delete()
+        .eq("id", eventId)
+
+      if (error) throw error
+
+      toast.success("일정이 삭제되었습니다.")
+      fetchEvents()
+    } catch (error) {
+      toast.error("일정 삭제에 실패했습니다.")
     } finally {
       setIsLoading(false)
     }
@@ -231,9 +252,21 @@ export function EventCalendar({ canCreate = false }: { canCreate?: boolean }) {
                           </p>
                         )}
                       </div>
-                      <Badge variant="secondary" className="ml-2">
-                        {event.profiles?.name || "관리자"}
-                      </Badge>
+                      <div className="flex items-center gap-2">
+                        <Badge variant="secondary">
+                          {event.profiles?.name || "관리자"}
+                        </Badge>
+                        {canDelete && (
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => handleDeleteEvent(event.id)}
+                            disabled={isLoading}
+                          >
+                            <Trash2 className="h-3 w-3" />
+                          </Button>
+                        )}
+                      </div>
                     </div>
                   </div>
                 ))}

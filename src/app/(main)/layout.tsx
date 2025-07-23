@@ -11,7 +11,7 @@ export default function MainLayout({
     <SupabaseProvider>
       <div className="relative min-h-screen">
         <Header />
-        <main className="container mx-auto px-4 py-6 pb-20 md:pb-6">
+        <main className="pb-20 md:pb-0">
           {children}
         </main>
         <MobileNav />

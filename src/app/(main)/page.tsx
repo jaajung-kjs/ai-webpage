@@ -64,10 +64,10 @@ export default async function HomePage() {
   const newMembers = profilesResult.data || []
 
   return (
-    <div className="space-y-8">
+    <div className="container mx-auto px-4 py-6 space-y-8">
       {/* Hero Section */}
-      <section className="text-center py-12 px-4 rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border">
-        <div className="max-w-3xl mx-auto space-y-4">
+      <section className="text-center py-12 px-6 rounded-2xl bg-gradient-to-br from-primary/10 via-primary/5 to-background border">
+        <div className="max-w-3xl mx-auto space-y-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
             <Sparkles className="h-4 w-4" />
             한국전력공사 전력관리처 생성형 AI 학습동아리
@@ -172,7 +172,7 @@ export default async function HomePage() {
 
       {/* Calendar Section */}
       <section id="calendar" className="scroll-mt-20">
-        <EventCalendar canCreate={isAdmin} />
+        <EventCalendar canCreate={isAdmin} canDelete={isAdmin} />
       </section>
 
       {/* Recent Activities */}

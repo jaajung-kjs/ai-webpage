@@ -35,10 +35,11 @@ export default async function OrganizationPage() {
     `)
     .order("order", { ascending: true })
 
-  // Fetch all members for display
+  // Fetch all verified members for display
   const { data: members } = await supabase
     .from("profiles")
     .select("*")
+    .eq("email_verified", true)
     .order("name", { ascending: true })
 
   return (

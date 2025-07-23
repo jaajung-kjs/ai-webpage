@@ -9,6 +9,7 @@ import { format } from "date-fns"
 import { ko } from "date-fns/locale"
 import { CommentSection } from "@/components/board/comment-section"
 import { DeleteButton } from "@/components/board/delete-button"
+import { PhotoGallery } from "@/components/board/photo-gallery"
 
 export default async function PostDetailPage({
   params,
@@ -132,7 +133,11 @@ export default async function PostDetailPage({
             <p className="whitespace-pre-wrap">{post.content}</p>
           </div>
 
-          {post.files && post.files.length > 0 && (
+          {category === "photo" && post.files && post.files.length > 0 && (
+            <PhotoGallery files={post.files} />
+          )}
+
+          {post.files && post.files.length > 0 && category !== "photo" && (
             <div className="mt-6 pt-6 border-t">
               <h3 className="text-sm font-medium mb-3">첨부파일</h3>
               <div className="space-y-2">

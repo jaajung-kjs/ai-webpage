@@ -107,54 +107,29 @@ export default async function BoardPage({
           posts.map((post) => (
             <Card key={post.id} className="hover:shadow-lg transition-shadow">
               <Link href={`/board/${category}/${post.id}`}>
-                <CardHeader>
-                  <div className="flex items-start justify-between">
-                    <div className="space-y-1">
-                      <CardTitle className="text-lg hover:text-primary transition-colors">
-                        {post.title}
-                      </CardTitle>
-                      <CardDescription className="flex items-center gap-4 text-sm">
-                        <span>{post.profiles?.name || "익명"}</span>
-                        <span>•</span>
-                        <span>
-                          {format(new Date(post.created_at), "yyyy.MM.dd HH:mm", {
-                            locale: ko,
-                          })}
-                        </span>
-                        {post._count && (
-                          <>
-                            <span>•</span>
-                            <span>댓글 {post._count[0]?.count || 0}</span>
-                          </>
-                        )}
-                      </CardDescription>
-                    </div>
+                <CardHeader className="pb-3">
+                  <div className="space-y-1">
+                    <CardTitle className="text-lg hover:text-primary transition-colors">
+                      {post.title}
+                    </CardTitle>
+                    <CardDescription className="flex items-center gap-2 text-sm">
+                      <span>{post.profiles?.name || "익명"}</span>
+                      <span className="text-muted-foreground/50">•</span>
+                      <span>
+                        {format(new Date(post.created_at), "yyyy.MM.dd HH:mm", {
+                          locale: ko,
+                        })}
+                      </span>
+                      {post._count && (
+                        <>
+                          <span className="text-muted-foreground/50">•</span>
+                          <span>댓글 {post._count[0]?.count || 0}</span>
+                        </>
+                      )}
+                    </CardDescription>
                   </div>
                 </CardHeader>
-                <CardContent>
-                  {category === "photo" && post.files && post.files.length > 0 && (
-                    <div className="mb-4 grid grid-cols-2 md:grid-cols-3 gap-2">
-                      {post.files
-                        .filter((file: any) => file.file_type?.startsWith("image/"))
-                        .slice(0, 3)
-                        .map((file: any) => (
-                          <div key={file.id} className="relative aspect-square rounded-lg overflow-hidden bg-muted">
-                            <img
-                              src={file.file_url}
-                              alt=""
-                              className="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform"
-                            />
-                          </div>
-                        ))}
-                      {post.files.filter((file: any) => file.file_type?.startsWith("image/")).length > 3 && (
-                        <div className="relative aspect-square rounded-lg overflow-hidden bg-muted flex items-center justify-center">
-                          <span className="text-lg font-medium text-muted-foreground">
-                            +{post.files.filter((file: any) => file.file_type?.startsWith("image/")).length - 3}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                <CardContent className="pt-0">
                   <p className="text-muted-foreground line-clamp-2">
                     {post.content}
                   </p>

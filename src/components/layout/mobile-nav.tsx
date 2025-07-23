@@ -43,7 +43,7 @@ export function MobileNav() {
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t md:hidden">
-      <div className="flex justify-around">
+      <div className="flex justify-around items-center h-16">
         {navItems.slice(0, 5).map((item) => {
           const Icon = item.icon
           const isActive = pathname === item.href || pathname.startsWith(item.href + "/")
@@ -53,15 +53,15 @@ export function MobileNav() {
               key={item.href}
               href={item.href}
               className={cn(
-                "flex flex-col items-center py-2 px-3 min-w-[64px]",
+                "flex flex-col items-center justify-center gap-1 py-2 px-3 min-w-[64px]",
                 "text-xs transition-colors",
                 isActive
                   ? "text-primary"
                   : "text-muted-foreground hover:text-foreground"
               )}
             >
-              <Icon className="h-5 w-5 mb-1" />
-              <span>{item.label}</span>
+              <Icon className="h-5 w-5" />
+              <span className="leading-none">{item.label}</span>
             </Link>
           )
         })}

@@ -81,9 +81,9 @@ export default function SignUpPage() {
 
   return (
     <Card className="w-full">
-      <CardHeader className="space-y-1">
-        <CardTitle className="text-2xl font-bold text-center">회원가입</CardTitle>
-        <CardDescription className="text-center">
+      <CardHeader className="text-center pb-6">
+        <CardTitle className="text-2xl font-bold">회원가입</CardTitle>
+        <CardDescription className="mt-2">
           AI 학습동아리에 가입하여 함께 성장해요
         </CardDescription>
       </CardHeader>
